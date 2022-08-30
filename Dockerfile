@@ -6,6 +6,6 @@ RUN pip install flask urllib3 requests Jinja2 gunicorn
 COPY src/ index/
 WORKDIR /index
 
-ENV PORT 4444
+ENV PORT 8080
 
 CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 index:index
