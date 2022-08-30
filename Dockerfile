@@ -8,4 +8,4 @@ WORKDIR /index
 
 ENV PORT 8080
 
-CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 index:index
+CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 index:app
