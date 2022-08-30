@@ -9,7 +9,7 @@
             "type": "pwa-chrome",
             "request": "launch",
             "name": "Open layout.html",
-            "file": "c:\\Users\\Developpement\\Downloads\\Stage\\PWA-Flask-Python-Template-master\\PWA-Flask-Python-Template-master\\templates\\layoutMain1.html"
+            "file": "c:\\Users\\Developpement\\Downloads\\Stage\\PWA-Flask-Python-Template-master\\PWA-Flask-Python-Template-master\\templates\\index.html"
         }
     ]
 }

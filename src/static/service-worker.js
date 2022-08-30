@@ -5,7 +5,7 @@ const filesToCache = [
     '/',
     '/static/app.js',
     '/flask-pwa.py',
-    '/templates/layoutMain1.html',
+    '/templates/index.html',
     '/static/styles.css',
     '/static/offline.html',
     '/static/images/logo.png'

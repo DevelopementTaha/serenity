@@ -12,7 +12,7 @@ def index():
     collections, sortedCollectionList, sortedSessionList = getAllCollections()
     anyCollections = any(col.showCollection == True for col in sortedCollectionList) #boolean variable
     keyword = getkeyword()
-    return render_template('layoutMain1.html', collections = sortedCollectionList, sortedSessionListFromCollection = sortedSessionList, keys = keyword, anyCollections = anyCollections)
+    return render_template('index.html', collections = sortedCollectionList, sortedSessionListFromCollection = sortedSessionList, keys = keyword, anyCollections = anyCollections)
 
 @app.route('/login')
 def loginHome():
@@ -24,7 +24,7 @@ def loginHome():
         collections, sortedCollectionList, sortedSessionList = getAllCollections()
         anyCollections = any(col.showCollection == True for col in sortedCollectionList) #boolean variable
         keyword = getkeyword()
-        return render_template('layoutMain1.html', collections = sortedCollectionList, sortedSessionListFromCollection = sortedSessionList, keys = keyword, anyCollections = anyCollections)
+        return render_template('index.html', collections = sortedCollectionList, sortedSessionListFromCollection = sortedSessionList, keys = keyword, anyCollections = anyCollections)
     else:
         #website link to login
         return render_template('bla')
