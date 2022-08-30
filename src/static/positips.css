@@ -1,0 +1,206 @@
+*{
+  box-sizing: border-box;
+}
+
+.wrapper {
+    float: left;
+    display: block;
+    text-align: center;
+    width: 50%;
+    margin: auto;
+    padding: 0px;
+    position: relative;
+    background-color: #f6f6f6;
+}
+
+p {
+  margin-top: 5vh !important;
+}
+.image {
+      position:relative; 
+      margin-left: auto;
+      margin-right: auto;
+      height: auto;
+      background-color:#f6f6f6;
+      background-size: contain;
+      top: 25px;
+    }
+
+.title{
+    position: relative;
+    top: 33px;
+    color: darkblue
+}
+
+.category{
+    position: relative;
+    top: 34px;
+    color: darkblue
+}
+
+.description{
+      position:relative;
+      color: darkblue;
+      top:60px
+
+    }
+      
+#description {
+      font-size:20px; 
+      font-style:italic; 
+      color: darkblue;
+    }
+.text{
+    position: relative;
+    top: 75px;
+    color: darkblue
+}
+.scroll {
+  margin: auto;
+  padding-right: 5vw;
+  width: 50vw;
+  height: 95vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-align: justify;
+}
+html {
+      height: 100%;
+    }
+body {
+      padding:0px;
+      margin:0px;
+      width:100%;
+      height:100%;
+      background-color: #F6F6F6; 
+    }
+div{
+      text-align: center;
+    }
+.footerbuttons{
+      position: fixed;
+      background-color: #ffffff; ;
+      margin-left: 0;
+      margin-right: 0;
+      max-width: 100%;
+      padding-left: 30px;
+      padding-right: 30px;
+      text-align: center;
+      bottom: 0;
+      width: 100%;
+      box-sizing: content-box;
+      height: 40px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-evenly;
+      align-content: space-evenly;
+      flex-wrap: wrap;
+      flex-direction: column;
+      box-shadow: 2px 2px 4px rgba(0,0,0,0.7), -2px -2px 4px rgba(64, 64, 63, 0.5);
+    }
+.footerImage{
+      width: 38px;
+      height: 38px;
+      background-size: cover;
+    }
+
+/* ################## Below is the css for mobiles! ################## */
+
+
+@media screen and (max-width: 600px) {
+  .wrapper {
+    float: left;
+    display: block;
+    text-align: center;
+    width: 100%;
+    margin: 0;
+    padding: 0px;
+    position: relative;
+    background-color: #f6f6f6;
+}
+.image {
+      position:relative; 
+      margin-left: auto;
+      margin-right: auto;
+      height: auto;
+      background-color:#f6f6f6;
+      background-size: contain;
+      top: 25px;
+    }
+
+.title{
+    position: relative;
+    top: 33px;
+    color: darkblue
+}
+
+.category{
+    position: relative;
+    top: 34px;
+    color: darkblue
+}
+
+.description{
+      position:relative;
+      color: darkblue;
+      top:19px
+
+    }
+      
+#description {
+      font-size:20px; 
+      font-style:italic; 
+      color: darkblue;
+    }
+.text{
+    position: relative;
+    top: 75px;
+    color: darkblue
+}
+.scroll {
+  margin: auto;
+  padding: 4px;
+  width: 85vw;
+  height: 115vh;
+  text-align: justify;
+}
+html {
+      height: 100%;
+    }
+body {
+      padding:0px;
+      margin:0px;
+      width:100%;
+      height:100%;
+      background-color: #F6F6F6; 
+    }
+div{
+      text-align: center;
+    }
+.footerbuttons{
+      position: fixed;
+      background-color: #ffffff; ;
+      margin-left: 0;
+      margin-right: 0;
+      max-width: 100%;
+      padding-left: 30px;
+      padding-right: 30px;
+      text-align: center;
+      bottom: 0;
+      width: 100%;
+      box-sizing: border-box;
+      height: 40px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-evenly;
+      align-content: space-evenly;
+      flex-wrap: wrap;
+      flex-direction: column;
+      box-shadow: 2px 2px 4px rgba(0,0,0,0.7), -2px -2px 4px rgba(64, 64, 63, 0.5);
+    }
+.footerImage{
+      width: 38px;
+      height: 38px;
+      background-size: cover;
+    }
+}

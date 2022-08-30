@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <meta name="theme-color" content="#FFFFFF">
+  <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}" />
+  <title>Welcome to Serenity Relaxation</title>
+  <meta name="description" content="Serenity relaxation webapp">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+	<link rel="shortcut icon" type="image/x-icon" href="../static/images/logo.png" />
+
+
+  <!-- Bootstrap Links -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <!-- JS, Popper.js, and jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
+
+  <!-- Jquery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+  <script type="text/javascript">
+    $('document').ready(function () {
+      var videos = document.querySelectorAll('video');
+      for (var i = 0; i < videos.length; i++)
+        videos[i].addEventListener('play', function () { pauseAll(this) }, true);
+
+      function pauseAll(elem) {
+        for (var i = 0; i < videos.length; i++) {
+          //Is this the one we want to play?
+          if (videos[i] == elem) continue;
+          //Have we already played it && is it already paused?
+          if (videos[i].played.length > 0 && !videos[i].paused) {
+            // Then pause it now
+            videos[i].pause();
+          }
+        }
+      }
+      $("#goToECat").click(function () {
+        $('html,body').animate({
+          scrollTop: 400},
+          'slow');
+      });
+    });
+  </script>
+  
+  $(document).ready(function() {
+
+    $('.search').each(function() {
+        var self = $(this);
+        var div = self.children('.field');
+        var placeholder = div.children('input').attr('placeholder');
+        var placeholderArr = placeholder.split(/ +/);
+        if(placeholderArr.length) {
+            var spans = $('<div />');
+            $.each(placeholderArr, function(index, value) {
+                spans.append($('<span />').html(value + '&nbsp;'));
+            });
+            div.append(spans);
+        }
+        self.click(function() {
+            self.addClass('open');
+            setTimeout(function() {
+                self.find('input').focus();
+                self.find('input').on('keyup', function() {
+                    self.toggleClass('loading', (self.find('input').val().toString().length > 3));
+                });
+            }, 750);
+        });
+        $(document).click(function(e) {
+            if(!$(e.target).is(self) && !jQuery.contains(self[0], e.target)) {
+                self.removeClass('open loading');
+                setTimeout(function() {
+                    self.find('input').val('');
+                }, 400);
+            }
+        });
+    });
+
+});
+
+
+</head>
+
+<body>
+  <header>
+
+    <section>
+
+      <div class="topnav">
+        <a href="loginPage.html">Login</a>
+        <input type="text" placeholder="Search here...">
+      </div>
+    </section>
+
+    <!-- Category -->
+
+    <div class="categories">
+      <div class="wrapper">
+
+        <h3 class="category-title">Serenity Relaxation</h3>
+        <h6 class="category-sub-title">Take a deep breath,and just enjoy your life.</h6>
+
+        <div class="categories-container">
+
+          <div class="category">
+
+            <img src="../static/images/cat1.png" alt="">
+            <div id="goToECat" class="category-body">
+              <h4>Energy</h4>
+              <span>1 session</span>
+            </div>
+          </div>
+
+          <div class="category">
+
+            <img src="../static/images/cat2.png" alt="">
+            <div class="category-body">
+              <h4>Mountains</h4>
+              <span>2 sessions</span>
+            </div>
+          </div>
+
+          <div class="category">
+
+            <img src="../static/images/cat3.png" alt="">
+            <div class="category-body">
+              <h4>Greenfields</h4>
+              <span>3 sessions</span>
+            </div>
+          </div>
+
+          <div class="category">
+
+            <img src="../static/images/cat4.png" alt="">
+            <div class="category-body">
+              <h4>Clouds</h4>
+              <span>4 sessions</span>
+            </div>
+          </div>
+
+          <div class="category">
+
+            <img src="../static/images/cat5.png" alt="">
+            <div class="category-body">
+              <h4>Nature</h4>
+              <span>5 sessions</span>
+            </div>
+          </div>
+
+          <div class="category">
+
+            <img src="../static/images/cat6.png" alt="">
+            <div class="category-body">
+              <h4>Sea</h4>
+              <span>6 sessions</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Video URL-->
+    <section style="overflow-x: auto;">
+      <div id="pCat" class="scroll-menu">
+        {% for keys, values in pvideos.items() %}
+        {% for key in values %}
+        {% for k, v in key.items() %}
+        <!-- object level -->
+        <!-- {% if k == "videoName" %} {{v}} {% endif %} -->
+        {% if k == "videoLink" %}
+        <a> <video oncontextmenu="return false;" src={{v}} controls controlsList="nodownload" width="480"
+            height="270" frameborder="0" allowfullscreen> </video> </a>
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
+        {% endfor %}
+      </div>
+
+    </section>
+
+    <div style="background-color: #eee;">
+      <br>
+      <br>
+    </div>
+
+
+    <section style="overflow-x: auto;">
+      <div id="eCat" class="scroll-menu">
+        {% for keys, values in evideos.items() %}
+        {% for key in values %}
+        {% for k, v in key.items() if k == "videoLink" %}
+        <a> <video oncontextmenu="return false;" src={{v}} controls controlsList="nodownload" width="480"
+            height="270" frameborder="0" allowfullscreen> </video> </a>
+        {% endfor %}
+        {% endfor %}
+        {% endfor %}
+      </div>
+
+    </section>
+
+    <div style="background-color: #eee;">
+      <br>
+      <br>
+    </div>
+
+
+    <section style="overflow-x: auto;">
+      <div id="pCat" class="scroll-menu">
+        {% for keys, values in pvideos.items() %}
+        {% for key in values %}
+        {% for k, v in key.items() %}
+        <!-- object level -->
+        <!-- {% if k == "videoName" %} {{v}} {% endif %} -->
+        {% if k == "videoLink" %}
+        <a> <video oncontextmenu="return false;" src={{v}} controls controlsList="nodownload" width="480"
+            height="270" frameborder="0" allowfullscreen> </video> </a>
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
+        {% endfor %}
+      </div>
+
+    </section>
+
+    <div style="background-color: #eee;">
+      <br>
+      <br>
+    </div>
+
+    
+    <section style="overflow-x: auto;">
+      <div id="pCat" class="scroll-menu">
+        {% for keys, values in pvideos.items() %}
+        {% for key in values %}
+        {% for k, v in key.items() %}
+        <!-- object level -->
+        <!-- {% if k == "videoName" %} {{v}} {% endif %} -->
+        {% if k == "videoLink" %}
+        <a> <video oncontextmenu="return false;" src={{v}} controls controlsList="nodownload" width="480"
+            height="270" frameborder="0" allowfullscreen> </video> </a>
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
+        {% endfor %}
+      </div>
+
+    </section>
+  
+    <div style="background-color: #eee;">
+      <br>
+      <br>
+    </div>
+
+
+    <section style="overflow-x: auto;">
+      <div id="pCat" class="scroll-menu">
+        {% for keys, values in pvideos.items() %}
+        {% for key in values %}
+        {% for k, v in key.items() %}
+        <!-- object level -->
+        <!-- {% if k == "videoName" %} {{v}} {% endif %} -->
+        {% if k == "videoLink" %}
+        <a> <video oncontextmenu="return false;" src={{v}} controls controlsList="nodownload" width="480"
+            height="270" frameborder="0" allowfullscreen> </video> </a>
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
+        {% endfor %}
+      </div>
+
+    </section>
+
+
+    <div style="background-color: #eee;">
+      <br>
+      <br>
+    </div>
+
+    <section style="overflow-x: auto;">
+      <div id="pCat" class="scroll-menu">
+        {% for keys, values in pvideos.items() %}
+        {% for key in values %}
+        {% for k, v in key.items() %}
+        <!-- object level -->
+        <!-- {% if k == "videoName" %} {{v}} {% endif %} -->
+        {% if k == "videoLink" %}
+        <a> <video oncontextmenu="return false;" src={{v}} controls controlsList="nodownload" width="480"
+            height="270" frameborder="0" allowfullscreen> </video> </a>
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
+        {% endfor %}
+      </div>
+
+    </section>
+
+    
+
+    <main>
+      <div class="container">
+        {% block body %}
+        {% endblock %}
+      </div>
+    </main>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+        <meta name="theme-color" content="#FFFFFF">
+        <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}" />
+        <title>Welcome to Serenity Relaxation</title>
+        <meta name="description" content="Serenity relaxation webapp">
+        <link rel="stylesheet" href="{{ url_for('static', filename='card.css') }}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <link rel="shortcut icon" type="image/x-icon" href="../static/images/logo.png" />
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous">
+        </script>
+        <script type="text/javascript">
+            $('document').ready(function () {
+                const height = elem => {
+                    return elem.getBoundingClientRect().height;
+                };
+                
+                const distance = (elemA, elemB, prop) => {
+                    const sizeA = elemA.getBoundingClientRect()[prop];
+                    const sizeB = elemB.getBoundingClientRect()[prop];
+                    return sizeB - sizeA;
+                };
+                
+                const factor = (elemA, elemB, prop) => {
+                    const sizeA = elemA.getBoundingClientRect()[prop];
+                    const sizeB = elemB.getBoundingClientRect()[prop];
+                    return sizeB / sizeA;
+                };
+                
+                document.querySelectorAll('.card').forEach(elem => {
+                    const head = elem.querySelector('.card__head');
+                    const image = elem.querySelector('.card__image');
+                    const author = elem.querySelector('.card__author');
+                    const body = elem.querySelector('.card__body');
+                    const foot = elem.querySelector('.card__foot');
+                
+                    elem.onmouseenter = () => {
+                    elem.classList.add('hover');
+                    const imageScale = 1 + factor(head, body, 'height');
+                    image.style.transform = `scale(${imageScale})`;
+                    const bodyDistance = height(foot) * -1;
+                    body.style.transform = `translateY(${bodyDistance}px)`;
+                    const authorDistance = distance(head, author, 'height');
+                    author.style.transform = `translateY(${authorDistance}px)`;
+                    };
+                
+                    elem.onmouseleave = () => {
+                    elem.classList.remove('hover');
+                    image.style.transform = `none`;
+                    body.style.transform = `none`;
+                    author.style.transform = `none`;
+                    };
+                });
+            });
+            function replaceText(text){
+                let btn = document.createElement("button");
+                btn.innerHTML = text;
+                btn.style = "selectionButton";
+                btn.name = "btn"+ name;
+                btn.onclick = function () {
+                    btn.parentNode.removeChild(btn)
+                };
+                document.getElementById("search-div").appendChild(btn);
+
+                /*document.getElementById("searchText").value = text;*/
+                search();
+            }
+        </script>
+
+    </head>
+
+    <body>
+        <div id="card-parent" class="parent-div">
+            {% for session in sessions %}
+                <a href="javascript:;" class="card">
+                    <div class="card__head">
+                        <div class="card__image" style="background-image: url('{{session.image}}');"></div>
+                        <div class="card__author">
+                            <div class="author">
+                                <img src="../static/images/logo.png" alt="Author of Tobias Reich" class="author__image">
+                                <div class="author__content">
+                            <p class="author__header">{{session.title}}</p>
+                            <p class="author__subheader">{{session.categorie}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card__body">
+                        <h2 class="card__headline"></h2>
+                        <p class="card__text">{{session.description}}</p>
+                    </div>
+                    <div class="card__foot">
+                        <span class="card__link">Explore</span>
+                    </div>
+                    <div class="card__border"></div>
+                </a>
+            {% endfor %}
+        </div>
+        <script src="{{ url_for('static', filename='cardLayout.js') }}"></script>
+    </body>
+
+</html>

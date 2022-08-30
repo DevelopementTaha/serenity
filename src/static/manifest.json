@@ -1,0 +1,37 @@
+{
+    "name": "Ma Pause Serenity PWA",
+    "short_name": "Serenity",
+    "theme_color": "#FFFFFF",
+    "background_color": "#FFFFFF",
+    "icons": [
+        {
+          "src": "/static/images/logo48.png",
+          "type": "image/png",
+          "sizes": "48x48"
+        },
+        {
+          "src": "/static/images/logo96.png",
+          "type": "image/png",
+          "sizes": "96x96"
+        },
+        {
+          "src": "/static/images/logo144.png",
+          "type": "image/png",
+          "sizes": "144x144"
+        },
+        {
+          "src": "/static/images/logo192.png",
+          "type": "image/png",
+          "sizes": "192x192"
+        },
+        {
+          "src": "/static/images/logo512.png",
+          "type": "image/png",
+          "sizes": "512x512"
+        }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "scope": "/"
+}
