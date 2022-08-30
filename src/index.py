@@ -8,7 +8,7 @@ app.secret_key = 'serenity'
 from wixRequests import getSessions, getSession, getPositip, getArticle, getCollection, getkeyword , getAllCollections
 
 @app.route('/')
-def home():
+def index():
     collections, sortedCollectionList, sortedSessionList = getAllCollections()
     anyCollections = any(col.showCollection == True for col in sortedCollectionList) #boolean variable
     keyword = getkeyword()

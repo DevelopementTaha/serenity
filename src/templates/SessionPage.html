@@ -65,7 +65,7 @@
                                 </style>
                                 -->
             <footer class = "footerbuttons">
-                <a href="{{ url_for('home') }}"><img src="..//static/images/PWA - Homepage.png" class="footerImage" /></a>
+                <a href="{{ url_for('index') }}"><img src="..//static/images/PWA - Homepage.png" class="footerImage" /></a>
                 <a href="{{session.video}}"><img src="..//static/images/PWA - Video Play.png" class="footerImage" /></a>
                 <a href="{{ url_for('showSessionAudio', sessionId=session.id) }}"><img src="..//static/images/PWA - Audio play.png" class="footerImage" /></a>
                 <a href="javascript:void(0)" onclick="history.back(); return false"><img src="..//static/images/PWA - Previous.png" class="footerImage" /></a>
