@@ -31,14 +31,11 @@ def loginHome():
     session['uid'] = sessionId
     loggedSuccessfully = loginUserWithSessionId(userName, userId, sessionId)
     if loggedSuccessfully:
-        collections, sortedCollectionList, sortedSessionList = getAllCollections()
-        anyCollections = any(col.showCollection == True for col in sortedCollectionList) #boolean variable
-        keyword = getkeyword()
         session['userId'] = userId
-        return render_template('index.html', userName = userName, collections = sortedCollectionList, sortedSessionListFromCollection = sortedSessionList, keys = keyword, anyCollections = anyCollections)
+        return redirect('/')
     else:
         #website link to login
-        return render_template('bla')
+        return redirect('/sessionExpired')
 
 @app.route('/card')
 def card():
