@@ -6,11 +6,11 @@ from LoginUtils import isUserValidInSession, loginUserWithSessionId
 
 app = Flask(__name__)
 app.secret_key = 'serenity'
-from wixRequests import getSessions, getSession, getPositip, getArticle, getCollection, getkeyword, getAllCollections, getUserSession
+from wixRequests import getSessions, getSession, getPositip, getArticle, getCollection, getkeyword, getAllCollections
 
 @app.route('/')
 def index():
-    collections, sortedCollectionList, sortedSessionList = getAllCollections()
+    sortedCollectionList, sortedSessionList = getAllCollections()
     anyCollections = any(col.showCollection == True for col in sortedCollectionList) #boolean variable
     keyword = getkeyword()
     try:
@@ -34,7 +34,6 @@ def loginHome():
         session['userId'] = userId
         return redirect('/')
     else:
-        #website link to login
         return redirect('/sessionExpired')
 
 @app.route('/card')

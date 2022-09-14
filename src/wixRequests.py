@@ -156,7 +156,7 @@ def getAllCollections():
             listOfCollections.append(co)
         sortedCollectionList = sorted(listOfCollections, key=lambda x: x.order)
         sortedSessionList = sorted(listOfCollections, key=lambda x: x.sessionsOrder)
-        return listOfCollections, sortedCollectionList, sortedSessionList
+        return sortedCollectionList, sortedSessionList
     else:
         myResponse.raise_for_status()
         print("Request Failed! on URL: " + myUrl)

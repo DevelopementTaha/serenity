@@ -14,12 +14,11 @@ def loginUserWithSessionId(userName, userId, sessionId):
     return False
 
 def isUserValidInSession(userId):
-    if(userId is not None):
-        user = getUserSession(userId)
-        if(user is not None):
-            timeNow = datetime.utcnow()
-            updatedDate = datetime.strptime(user.updatedDate, '%Y-%m-%dT%H:%M:%S.%fZ')
-            expiryDate = updatedDate + timedelta(hours=user.validity)
-            if(timeNow < expiryDate):
-                return True
+    user = getUserSession(userId)
+    if(user is not None):
+        timeNow = datetime.utcnow()
+        updatedDate = datetime.strptime(user.updatedDate, '%Y-%m-%dT%H:%M:%S.%fZ')
+        expiryDate = updatedDate + timedelta(hours=user.validity)
+        if(timeNow < expiryDate):
+            return True
     return False
