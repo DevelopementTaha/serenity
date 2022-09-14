@@ -197,7 +197,7 @@ def postUserSession(userName, userId, sessionId):
 def insertUserSession(userName, userId, sessionId):
 
     myUrl = url + "/insertUserSession"
-    validity = getUserSessionValidity
+    validity = getUserSessionValidity(userId)
     if(validity is None):
         validity = 6 #default
 
