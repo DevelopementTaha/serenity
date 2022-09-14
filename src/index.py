@@ -111,7 +111,7 @@ def openLink():
 
 @app.route('/sessionExpired')
 def expired():
-    return render_template('sessionExpired.html')
+    return render_template('SessionExpired.html')
 
 @app.route('/None')
 def none():
