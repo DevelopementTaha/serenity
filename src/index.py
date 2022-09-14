@@ -1,30 +1,41 @@
+import json
 import uuid
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, redirect
 from urllib.parse import unquote_plus
-from LoginUtils import loginUserWithSessionId
+from LoginUtils import isUserValidInSession, loginUserWithSessionId
 
 app = Flask(__name__)
 app.secret_key = 'serenity'
-from wixRequests import getSessions, getSession, getPositip, getArticle, getCollection, getkeyword , getAllCollections
+from wixRequests import getSessions, getSession, getPositip, getArticle, getCollection, getkeyword, getAllCollections, getUserSession
 
 @app.route('/')
 def index():
     collections, sortedCollectionList, sortedSessionList = getAllCollections()
     anyCollections = any(col.showCollection == True for col in sortedCollectionList) #boolean variable
     keyword = getkeyword()
-    return render_template('index.html', collections = sortedCollectionList, sortedSessionListFromCollection = sortedSessionList, keys = keyword, anyCollections = anyCollections)
+    try:
+        if(isUserValidInSession(session['userId'])):
+            return render_template('index.html', collections = sortedCollectionList, sortedSessionListFromCollection = sortedSessionList, keys = keyword, anyCollections = anyCollections)
+        else:
+            return redirect('/sessionExpired')
+    except KeyError as ke:
+        return redirect('/sessionExpired')
 
 @app.route('/login')
 def loginHome():
-    userName = request.args.get('user', None)
+    user = request.args.get('user', None)
+    data = json.loads(user)
+    userName = data['fullName']
+    userId = data['id']
     sessionId = str(uuid.uuid4())
     session['uid'] = sessionId
-    loggedSuccessfully = loginUserWithSessionId(userName, sessionId)
+    loggedSuccessfully = loginUserWithSessionId(userName, userId, sessionId)
     if loggedSuccessfully:
         collections, sortedCollectionList, sortedSessionList = getAllCollections()
         anyCollections = any(col.showCollection == True for col in sortedCollectionList) #boolean variable
         keyword = getkeyword()
-        return render_template('index.html', collections = sortedCollectionList, sortedSessionListFromCollection = sortedSessionList, keys = keyword, anyCollections = anyCollections)
+        session['userId'] = userId
+        return render_template('index.html', userName = userName, collections = sortedCollectionList, sortedSessionListFromCollection = sortedSessionList, keys = keyword, anyCollections = anyCollections)
     else:
         #website link to login
         return render_template('bla')
@@ -34,49 +45,80 @@ def card():
     clickedKey = request.args.get('keyword', '')
     sessions = getSessions()
     keys = getkeyword()
-    return render_template('card.html', sessions = sessions, keys = keys, clickedKey = clickedKey)
+    if(isUserValidInSession(session['userId'])):
+        return render_template('card.html', sessions = sessions, keys = keys, clickedKey = clickedKey)
+    else:
+        return redirect('/sessionExpired')
 
 @app.route('/showSession')
 def showSession():
     sessionId = request.args.get('sessionId', None)
-    session = getSession(sessionId)
-    return render_template('SessionPage.html', session = session)
+    selectedSession = getSession(sessionId)
+    
+    if(isUserValidInSession(session['userId'])):
+        return render_template('SessionPage.html', session = selectedSession)
+    else:
+        return redirect('/sessionExpired')
 
 @app.route('/showPositips')
 def showPositip():
     positipId = request.args.get('positipId', None)
-    session = getPositip(positipId)
-    return render_template('Positips.html', session = session)
+    selectedSession = getPositip(positipId)
+    
+    if(isUserValidInSession(session['userId'])):
+        return render_template('Positips.html', session = selectedSession)
+    else:
+        return redirect('/sessionExpired')
 
 @app.route('/showArticles')
 def showArticle():
     articleId = request.args.get('articleId', None)
-    session = getArticle(articleId)
-    return render_template('Articles.html', session = session)
+    selectedSession = getArticle(articleId)
+    
+    if(isUserValidInSession(session['userId'])):
+        return render_template('Articles.html', session = selectedSession)
+    else:
+        return redirect('/sessionExpired')
 
 @app.route('/showSessionAudio')
 def showSessionAudio():
     sessionId = request.args.get('sessionId', None)
-    session = getSession(sessionId)
-    return render_template('SessionAudio.html', session = session)
+    selectedSession = getSession(sessionId)
+    
+    if(isUserValidInSession(session['userId'])):
+        return render_template('SessionAudio.html', session = selectedSession)
+    else:
+        return redirect('/sessionExpired')
 
 @app.route('/showCollections')
 def showCollections():
     collectionId = request.args.get('collectionId', None)
     collection = getCollection(collectionId)
-    return render_template('collection.html', collection = collection)
+    
+    if(isUserValidInSession(session['userId'])):
+        return render_template('collection.html', collection = collection)
+    else:
+        return redirect('/sessionExpired')
 
 @app.route('/openLink')
 def openLink():
     videoLink = unquote_plus(request.args.get('videoLink'))
-    return render_template('/try.html', videoLink = videoLink)
+    
+    if(isUserValidInSession(session['userId'])):
+        return render_template('/try.html', videoLink = videoLink)
+    else:
+        return redirect('/sessionExpired')
+
+@app.route('/sessionExpired')
+def expired():
+    return render_template('sessionExpired.html')
 
 @app.route('/None')
 def none():
     return render_template('/notFound.html')
 
 @app.route('/loginPage.html')
-def login():    
+def login():
     return render_template('Loginpage.html')
 
 @app.route('/offline.html')

@@ -1,4 +1,4 @@
-import imp
+from pprint import pprint
 import requests
 import json
 from CollectionObject import CollectionObject
@@ -184,51 +184,74 @@ def getkeyword():
         print("Request Failed! on URL: " + myUrl)
         return None
 
-def postUserSession(userName, sessionId):
+def postUserSession(userName, userId, sessionId):
 
-    user = getUserSession(userName)
+    user = getUserSession(userId)
 
     if(user is not None):
-        updateUserSession(user.id, userName, sessionId)
+        return updateUserSession(user.id, userName, userId, sessionId)
     else:
-        insertUserSession(userName, sessionId)
+        return insertUserSession(userName, userId, sessionId)
 
 
-def insertUserSession(userName, sessionId):
+def insertUserSession(userName, userId, sessionId):
 
     myUrl = url + "/insertUserSession"
+    validity = getUserSessionValidity
+    if(validity is None):
+        validity = 6 #default
 
-    myResponse = requests.post(
-    myUrl,
-    json = {"title": userName, "sessionId": sessionId, "validity": 6})
+    jsons = {"userName": userName, "userId": userId, "sessionId": sessionId, "validity": validity}
+    
+    myResponse = requests.post(myUrl, data=json.dumps(jsons))
+
     if(myResponse.ok):
         print("User " + userName + " Inserted in with sessionId: " + sessionId)
+        return True
     else:
         print("User " + userName + " Insertion not successful with sessionId: " + sessionId)
+        return False
 
-def updateUserSession(userId, userName, sessionId):
+def updateUserSession(id, userName, userId, sessionId):
 
     myUrl = url + "/updateUserSession"
 
+    validity = getUserSessionValidity(userId)
+    if(validity is None):
+        validity = 6 #default
+
     myResponse = requests.post(
     myUrl,
-    json = {"_id": userId, "title": userName, "sessionId": sessionId, "validity": 6})
+    json = {"_id": id, "userName": userName, "sessionId": sessionId, "validity": validity})
     if(myResponse.ok):
         print("User " + userName + " updated in with sessionId: " + sessionId)
+        return True
     else:
         print("User " + userName + " update not successful with sessionId: " + sessionId)
+        return False
 
-def getUserSession(userName):
-
-    myUrl = url + "/getUserSession/"+ userName
+def getUserSession(userId):
+    myUrl = url + "/findUserSession/"+ userId
 
     myResponse = requests.get(myUrl,verify=True)
 
     if(myResponse.ok):
         userSession = json.loads(myResponse.content, object_hook=lambda d: SimpleNameSpace(**d)) #List of rows
-        user = UserObject(userSession.userSession[0]._id,userSession.userSession[0].title,userSession.userSession[0].sessionId,userSession.userSession[0].validity)
+        user = UserObject(userSession.userSessions[0]._id,userSession.userSessions[0].userName,userSession.userSessions[0].userId,userSession.userSessions[0].sessionId,userSession.userSessions[0]._updatedDate,userSession.userSessions[0].validity)
         print("User " + user.userName + " exists with SessionId: " + user.sessionId)
         return user
     else:
-        print("User " + userName + " does not exist")
+        print("User with Id" + userId + " does not exist")
+        return None
+
+def getUserSessionValidity(userId):
+    myUrl = url + "/sessionValidity/"
+
+    myResponse = requests.get(myUrl,verify=True)
+
+    if(myResponse.ok):
+        validityRow = json.loads(myResponse.content, object_hook=lambda d: SimpleNameSpace(**d)) #List of rows
+        validity = (validityRow.validity[0].validity)
+        return validity
+    else:
         return None

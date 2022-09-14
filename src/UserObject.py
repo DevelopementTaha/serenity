@@ -1,9 +1,11 @@
 class UserObject:
-
-  def __init__(self, id,userName,sessionId, validity):
-    self.id = id
-    self.userName = userName
-    self.sessionId = sessionId
-    self.validity = validity
+  
+    def __init__(self, id, userName, userId, sessionId, updatedDate, validity):
+      self.id = id
+      self.userName = userName
+      self.userId = userId
+      self.sessionId = sessionId
+      self.updatedDate = updatedDate
+      self.validity = validity
 
 
